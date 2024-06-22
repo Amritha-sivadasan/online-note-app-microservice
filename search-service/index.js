@@ -21,6 +21,6 @@ mongoose.connect(process.env.MONGOURL).then(()=>{
 }).catch((err)=>{
     console.log('database connection error',err);
 })
-app.listen(5003,()=>{
-    console.log('server is running on the port 5002');
+app.listen(5004,()=>{
+    console.log('server is running on the port 5004');
 })

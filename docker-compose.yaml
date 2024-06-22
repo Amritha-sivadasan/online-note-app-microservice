@@ -1,0 +1,102 @@
+version: "3.4"
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.12.14-management
+    restart: unless-stopped
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - online-network
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=development
+      
+    depends_on:
+      - auth-service
+      - note-service
+      - notification-service
+      - search-service
+      - rabbitmq
+    networks:
+      - online-network
+
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: auth-service
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - rabbitmq
+      - MONGOURL="mongodb+srv://amrithas172:aQRD1hJsl4zUlP7O@online-note-app.awvtv0a.mongodb.net/user?retryWrites=true&w=majority&appName=online-note-app"
+    networks:
+      - online-network
+
+  note-service:
+    build:
+      context: ./note-service
+      dockerfile: Dockerfile
+    container_name: note-service
+    ports:
+      - "5002:5002"
+    environment:
+      - NODE_ENV=development
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+      - MONGOURL="mongodb+srv://amrithas172:aQRD1hJsl4zUlP7O@online-note-app.awvtv0a.mongodb.net/Notes?retryWrites=true&w=majority&appName=online-note-app"
+    depends_on:
+      - rabbitmq
+      - search-service
+      - notification-service
+
+    networks:
+      - online-network
+
+  notification-service:
+    build:
+      context: ./notification-service
+      dockerfile: Dockerfile
+    container_name: notification-service
+    ports:
+      - "5003:5003"
+    environment:
+      - NODE_ENV=development
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+      
+    depends_on:
+      - rabbitmq
+
+    networks:
+      - online-network
+
+  search-service:
+    build:
+      context: ./search-service
+      dockerfile: Dockerfile
+    container_name: search-service
+    ports:
+      - "5004:5004"
+    environment:
+      - NODE_ENV=development
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+      - MONGOURL="mongodb+srv://amrithas172:aQRD1hJsl4zUlP7O@online-note-app.awvtv0a.mongodb.net/Search?retryWrites=true&w=majority&appName=online-note-app"
+    depends_on:
+      - rabbitmq
+    networks:
+      - online-network
+networks:
+  online-network:
+    driver: bridge

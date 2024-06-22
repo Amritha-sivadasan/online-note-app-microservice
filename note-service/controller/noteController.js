@@ -9,8 +9,12 @@ const addNotes=async(req,res)=>{
             return res.json("title already exit")
         }  
         const newNote= new Note({title,userId,content,tags})
-            newNote.save()
-            PublisherNote('Note_Creted',{noteId:newNote._id,title,content,tags,userId})
+           await newNote.save()
+        
+            console.log('newnote',newNote)
+
+          PublisherNote('Note_Creted',{noteId:newNote._id,title,content,tags,userId})
+         PublisherNote('Notification',{noteId:newNote._id,title,content,tags,userId})
             res.json('note saved')
         
     } catch (error) {

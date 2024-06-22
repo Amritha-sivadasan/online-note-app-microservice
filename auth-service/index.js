@@ -3,7 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-const { register, login } = require("./controller/userController");
+const { register, login,userDetails } = require("./controller/userController");
 const app = express();
 dotenv.config();
 
@@ -16,6 +16,7 @@ app.get("/", (req, res) => {
 });
 app.post("/register", register);
 app.post("/", login);
+app.get('/user',userDetails)
 
 mongoose
   .connect(process.env.MONGOURL)

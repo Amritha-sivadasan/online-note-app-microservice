@@ -41,4 +41,16 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+const userDetails=async(req,res)=>{
+  const {userId}=req.query
+  try {
+    const user= await User.findOne({_id:userId})
+    res.json(user)
+    
+  } catch (error) {
+    console.log('error while getting user details',error);
+    
+  }
+}
+
+module.exports = { register, login,userDetails };

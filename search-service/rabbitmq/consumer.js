@@ -15,10 +15,10 @@ const consumer = async () => {
         const msgContent = msg.content.toString();
         const data = JSON.parse(msgContent);
      
-        const { noteId,title,userId,content,tags } = data;
+        const {noteId,title,userId,content,tags } = data;
+ 
         const noteDetails = new Note({noteId,title,userId,content,tags})
         noteDetails.save()
-       
         channel.ack(msg);
       }
     } catch (error) {
