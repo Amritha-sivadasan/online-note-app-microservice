@@ -40,9 +40,10 @@ services:
       - "5001:5001"
     environment:
       - NODE_ENV=development
+      - MONGOURL=mongodb+srv://amrithas172:aQRD1hJsl4zUlP7O@online-note-app.awvtv0a.mongodb.net/user?retryWrites=true&w=majority&appName=online-note-app
     depends_on:
       - rabbitmq
-      - MONGOURL="mongodb+srv://amrithas172:aQRD1hJsl4zUlP7O@online-note-app.awvtv0a.mongodb.net/user?retryWrites=true&w=majority&appName=online-note-app"
+      
     networks:
       - online-network
 
@@ -56,7 +57,7 @@ services:
     environment:
       - NODE_ENV=development
       - RABBITMQ_URL=amqp://rabbitmq:5672
-      - MONGOURL="mongodb+srv://amrithas172:aQRD1hJsl4zUlP7O@online-note-app.awvtv0a.mongodb.net/Notes?retryWrites=true&w=majority&appName=online-note-app"
+      - MONGOURL=mongodb+srv://amrithas172:aQRD1hJsl4zUlP7O@online-note-app.awvtv0a.mongodb.net/Notes?retryWrites=true&w=majority&appName=online-note-app
     depends_on:
       - rabbitmq
       - search-service
@@ -92,7 +93,7 @@ services:
     environment:
       - NODE_ENV=development
       - RABBITMQ_URL=amqp://rabbitmq:5672
-      - MONGOURL="mongodb+srv://amrithas172:aQRD1hJsl4zUlP7O@online-note-app.awvtv0a.mongodb.net/Search?retryWrites=true&w=majority&appName=online-note-app"
+      - MONGOURL=mongodb+srv://amrithas172:aQRD1hJsl4zUlP7O@online-note-app.awvtv0a.mongodb.net/Search?retryWrites=true&w=majority&appName=online-note-app
     depends_on:
       - rabbitmq
     networks:

@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const {connectRabbitMQ}=require('./rabbitmq/rabbitmqconnection')
+const {connectRabbitMQ}=require('./rabbitmq/rabbitmqConnection')
 const {consumer}=require('./rabbitmq/notificationConsumer')
 
 dotenv.config();

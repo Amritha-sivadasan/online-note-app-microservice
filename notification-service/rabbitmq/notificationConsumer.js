@@ -1,4 +1,4 @@
-const { connectRabbitMQ } = require("./rabbitmqconnection");
+const { connectRabbitMQ } = require("./rabbitmqConnection");
 const {sendNotification} = require("../utils/notificationSender");
 const axios = require("axios");
 
@@ -18,7 +18,7 @@ const consumer = async () => {
           const { userId, title } = data;
           console.log(userId);
 
-          const userServiceUrl = `http://localhost:5001/user?userId=${userId}`;
+          const userServiceUrl = `http://auth-service:5001/user?userId=${userId}`;
           const userResponse = await axios.get(userServiceUrl);
        
 
