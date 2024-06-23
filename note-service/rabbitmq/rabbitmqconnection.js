@@ -1,6 +1,6 @@
 const amqp = require("amqplib/callback_api");
 
-const MAX_RETRIES = 5;
+const MAX_RETRIES = 9;
 let retryCount = 0;
 
 const connectRabbitMQ = () => {
